@@ -71,6 +71,11 @@ classDiagram
       +ReviewRepository
       +AmenityRepository
     }
+
+    %% Ajout de descriptions
+    PresentationLayer : Interacts with users
+    BusinessLogicLayer : Contains core logic
+    PersistenceLayer : Manages data storage
     
 
 ```
