@@ -4,9 +4,6 @@ from app.models.places import Place
 
 
 class Review(BaseModel):
-    """
-    Review class to put review on a place, with text, note, place and user.
-    """
     def __init__(self, text, rating, place, user):
         super().__init__()
         self.text = text
@@ -14,18 +11,42 @@ class Review(BaseModel):
         self.place = place
         self.user = user
 
+    @property
+    def text(self):
+        return self._text
 
-    def validate(self):
-        if not self.text:
-            raise ValueError("Review text is required")
-        if not 1 <= self.rating <= 5:
-            raise ValueError("Rating must be between 1 and 5")
+    @text.setter
+    def text(self, value):
+        if not isinstance(value, str) or not value:
+            raise ValueError("Text must be a non-empty string")
+        self._text = value
 
+    @property
+    def rating(self):
+        return self._rating
 
-    def update(self, data):
-        super().update(data)
-        self.validate()
+    @rating.setter
+    def rating(self, value):
+        if not isinstance(value, int) or value < 1 or value > 5:
+            raise ValueError("Rating must be an integer between 1 and 5")
+        self._rating = value
 
+    @property
+    def place(self):
+        return self._place
 
-    def __repr__(self):
-        return f"<Review id={self.id} rating={self.rating}>"
+    @place.setter
+    def place(self, value):
+        if not isinstance(value, Place):
+            raise ValueError("Place must be a Place instance")
+        self._place = value
+
+    @property
+    def user(self):
+        return self._user
+
+    @user.setter
+    def user(self, value):
+        if not isinstance(value, User):
+            raise ValueError("User must be a User instance")
+        self._user = value

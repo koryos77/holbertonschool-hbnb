@@ -19,8 +19,3 @@ class BaseModel:
             if hasattr(self, key):
                 setattr(self, key, value)
         self.save() 
-
-
-    def __repr__(self):
-        """Representation of the BaseModel instance."""
-        return f"<{self.__class__.__name__} id={self.id}>"
