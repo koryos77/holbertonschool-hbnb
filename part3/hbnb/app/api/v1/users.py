@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services import facade
 
 api = Namespace('users', description='User operations')
@@ -7,7 +8,8 @@ api = Namespace('users', description='User operations')
 user_model = api.model('User', {
     'first_name': fields.String(required=True, description='First name of the user'),
     'last_name': fields.String(required=True, description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True, description='Password of the user')
 })
 
 @api.route('/')
@@ -62,9 +64,18 @@ class UserResource(Resource):
     @api.response(200, 'User updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized action')
+    @jwt_required()
     def put(self, user_id):
         """Update a user's information"""
+        current_user = get_jwt_identity()
         user_data = api.payload
+
+        if str(current_user['id']) != user_id:
+            return {'error': 'Unauthorized action'}, 403
+        if 'email' in user_data or 'password' in user_data:
+            return {'error': 'You cannot modify email or password'}, 400
+
         try:
             updated_user = facade.update_user(user_id, user_data)
             if updated_user:
@@ -78,3 +89,11 @@ class UserResource(Resource):
                 return {'error': 'User not found'}, 404
         except ValueError as e:
             return {'error': str(e)}, 400
+
+api.route('/protected')
+class ProtectedResource(Resource):
+    @jwt_required()
+    def get(self):
+        """A protected endpoint that requires a valid JWT token"""
+        current_user = get_jwt_identity()
+        return {'message': f'Hello, user {current_user["id"]}'}, 200

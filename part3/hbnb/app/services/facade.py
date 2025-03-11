@@ -17,7 +17,13 @@ class HBnBFacade:
         """Create a new user with the provided data."""
         if self.get_user_by_email(user_data['email']):
             raise ValueError('Email already registered')
-        user = User(**user_data)
+
+        user = User(
+            first_name=user_data['first_name'],
+            last_name=user_data['last_name'],
+            email=user_data['email'],
+            password=user_data['password']
+        )
         self.user_repo.add(user)
         return user
 
@@ -35,7 +41,7 @@ class HBnBFacade:
 
     def update_user(self, user_id, user_data):
         """Update a user's information."""
-        user = self.get_user(user_id)
+        user = self.user_repo.get(user_id)
         if not user:
             return None
 
@@ -45,11 +51,16 @@ class HBnBFacade:
             if existing_user and existing_user.id != user_id:
                 raise ValueError('Email already registered')
 
-        try:
-            user.update(user_data)
-            return user
-        except ValueError as e:
-            raise ValueError(str(e))
+        if 'password' in user_data:
+            user.hash_password(user_data['password'])
+        if 'first_name' in user_data:
+            user.first_name = user_data['first_name']
+        if 'last_name' in user_data:
+            user.last_name = user_data['last_name']
+        if 'email' in user_data:
+            user.email = user_data['email']
+
+        return user
 
     #Amenity
     def create_amenity(self, amenity_data):
