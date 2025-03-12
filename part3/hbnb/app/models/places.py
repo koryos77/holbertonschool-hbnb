@@ -1,8 +1,16 @@
 from app.models.base_model import BaseModel
-from app.models.user import User
 from app.models.amenities import Amenity
+from app.extensions import db
 
 class Place(BaseModel):
+    __tablename__ = 'places'
+
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(), nullable=False)
+    price = db.Column(db.Float(), nullable=False)
+    latitude = db.Column(db.Float(), nullable=False)
+    longitude = db.Column(db.Float(), nullable=False)
+
     def __init__(self, title, description, price, latitude, longitude, owner):
         super().__init__()
         self.title = title

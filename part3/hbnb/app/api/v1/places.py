@@ -196,4 +196,3 @@ class PlaceReviews(Resource):
                 'rating': review.rating
             } for review in reviews
         ], 200
-

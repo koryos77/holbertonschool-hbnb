@@ -14,7 +14,7 @@ class User(BaseModel):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
-    password = db.Column(db.String(128), nullable=False)
+    _password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
 
@@ -63,11 +63,6 @@ class User(BaseModel):
         pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
         return re.match(pattern, email) is not None
 
-    @property
-    def password(self):
-        return None
-
-    @password.setter
     def hash_password(self, password):
         """Hashes the password before storing it."""
         self._password = bcrypt.generate_password_hash(password).decode('utf-8')

@@ -1,9 +1,15 @@
 from app.models.base_model import BaseModel
 from app.models.user import User
 from app.models.places import Place
+from app.extensions import db
 
 
 class Review(BaseModel):
+    __tablename__ = 'reviews'
+
+    text = db.Column(db.String(), nullable=False)
+    rating = db.Column(db.Integer(), nullable=False)
+
     def __init__(self, text, rating, place, user):
         super().__init__()
         self.text = text

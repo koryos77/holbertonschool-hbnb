@@ -89,11 +89,3 @@ class UserResource(Resource):
                 return {'error': 'User not found'}, 404
         except ValueError as e:
             return {'error': str(e)}, 400
-
-api.route('/protected')
-class ProtectedResource(Resource):
-    @jwt_required()
-    def get(self):
-        """A protected endpoint that requires a valid JWT token"""
-        current_user = get_jwt_identity()
-        return {'message': f'Hello, user {current_user["id"]}'}, 200
