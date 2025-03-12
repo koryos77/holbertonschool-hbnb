@@ -126,6 +126,25 @@ class PlaceResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 400
 
+    @api.response(200, 'Place deleted successfully')
+    @api.response(404, 'Place not found')
+    @api.response(403, 'Unauthorized action')
+    @jwt_required
+    def delete(self, place_id):
+        """Delete a place"""
+        current_user = get_jwt_identity()
+        place = facade.get_place(place_id)
+
+        if not place:
+            return {'error': 'Place not found'}, 404
+        if str(place.user.id) != current_user['id']:
+            return {'error': 'Unauthorized action'}, 403
+    
+        success = facade.delete_place(place_id)
+        if success:
+            return {'message': 'Place deleted successfully'}, 200
+        return {'error': 'Place not found'}
+
 @api.route('/<place_id>')
 class PlaceResource(Resource):
     @api.response(200, 'Place details retrieved successfully')
@@ -177,3 +196,4 @@ class PlaceReviews(Resource):
                 'rating': review.rating
             } for review in reviews
         ], 200
+

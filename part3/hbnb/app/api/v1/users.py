@@ -73,7 +73,7 @@ class UserResource(Resource):
 
         if str(current_user['id']) != user_id:
             return {'error': 'Unauthorized action'}, 403
-        if 'email' in user_data or 'password' in user_data:
+        if not 'email' in user_data or not 'password' in user_data:
             return {'error': 'You cannot modify email or password'}, 400
 
         try:

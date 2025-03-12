@@ -96,6 +96,7 @@ class ReviewResource(Resource):
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
+    @api.response(403, 'Unauthorized action')
     @jwt_required
     def delete(self, review_id):
         """Delete a review"""
