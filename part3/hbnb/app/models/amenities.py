@@ -1,22 +1,28 @@
-from app.models.base_model import BaseModel
-from app.extensions import db
-
+from .basemodel import BaseModel
 
 class Amenity(BaseModel):
-    __tablename__ = 'amenities'
+	def __init__(self, name):
+		super().__init__()	
+		self.name = name
 
-    name = db.Column(db.String(50), nullable=False, unique=True)
+	@property
+	def name(self):
+		return self.__name
 
-    def __init__(self, name):
-        super().__init__()
-        self.name = name
+	@name.setter
+	def name(self, value):
+		if not isinstance(value, str):
+			raise TypeError("Name must be a string")
+		if not value:
+			raise ValueError("Name cannot be empty")
+		super().is_max_length('Name', value, 50)
+		self.__name = value
 
-    @staticmethod
-    def validate_name(self, name):
-        if not name or not isinstance(name, str) or len(name) > 50:
-            raise ValueError("Amenity's name must be a non-empty string <= 50 characters")
-
-    def update(self, data):
-        if 'name' in data:
-            self.validate_name(data['name'])
-        super().update(data)
+	def update(self, data):
+		return super().update(data)
+	
+	def to_dict(self):
+		return {
+			'id': self.id,
+			'name': self.name
+		}
