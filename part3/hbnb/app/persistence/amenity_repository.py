@@ -1,5 +1,6 @@
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.amenities import Amenity
+from app.extensions import db
 
 
 class AmenityRepository(SQLAlchemyRepository):
@@ -12,6 +13,13 @@ class AmenityRepository(SQLAlchemyRepository):
         return amenity
     
     def update_amenity(self, amenity_data, amenity_id):
-        amenity = self.get(amenity_id)
-        amenity.update(amenity_data)
+        """Update an amenity"""
+        amenity = self.model.query.get(amenity_id)
+        if not amenity:
+            return None
+        
+        for key, value in amenity_data.items():
+            setattr(amenity, key, value)
+        
+        self.add(amenity)
         return amenity

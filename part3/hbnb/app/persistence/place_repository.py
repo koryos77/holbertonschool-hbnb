@@ -1,5 +1,6 @@
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.places import Place
+from app.extensions import db
 
 
 class PlaceRepository(SQLAlchemyRepository):
@@ -12,8 +13,13 @@ class PlaceRepository(SQLAlchemyRepository):
         return place
 
     def update_place(self, place_data, place_id):
-        place = self.get(place_id)
+        """Update a place"""
+        place = self.model.query.get(place_id)
         if not place:
             return None
-        place.update(place_data)
+
+        for key, value in place_data.items():
+            setattr(place, key, value)
+
+        self.add(place)
         return place

@@ -1,7 +1,18 @@
 from .base_model import BaseModel
+from app.extensions import db
 from .user import User
 
 class Place(BaseModel):
+    __tablename__ = 'places'
+
+    id = db.Column(db.String(36), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+
+
     def __init__(self, title: str, price: float, latitude: str, longitude, owner, description=None):
         super().__init__()
         self.title = title

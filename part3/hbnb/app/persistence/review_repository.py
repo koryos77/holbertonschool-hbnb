@@ -1,5 +1,6 @@
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.reviews import Review
+from app.extensions import db
 
 
 class ReviewRepository(SQLAlchemyRepository):
@@ -12,8 +13,13 @@ class ReviewRepository(SQLAlchemyRepository):
         return review
 
     def update_review(self, review_data, review_id):
-        review = self.get(review_id)
+        """Update a review"""
+        review = self.model.query.get(review_id)
         if not review:
             return None
-        review.update(review_data)
+
+        for key, value in review_data.items():
+            setattr(review, key, value)
+
+        self.add(review)
         return review

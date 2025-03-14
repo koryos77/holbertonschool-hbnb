@@ -6,6 +6,7 @@ from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
 from app.api.v1.auth import api as auth_api
 from app.api.v1.protected import api as protected_api
+from app.api.v1.admin import api as admin_ns
 from app.extensions import bcrypt, jwt, db
 
 def create_app(config_class="config.DevelopmentConfig"):
@@ -24,6 +25,7 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(auth_api, path='/api/v1/auth')
     api.add_namespace(protected_api, path='/api/v1/protected')
+    api.add_namespace(admin_ns, path='/api/v1/admin/')
     return app
 
 if __name__ == "__main__":

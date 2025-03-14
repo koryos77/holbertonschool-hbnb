@@ -1,6 +1,12 @@
 from .base_model import BaseModel
+from app.extensions import db
 
 class Amenity(BaseModel):
+	__tablename__ = 'reviews'
+
+	id = db.Column(db.Integer, nullable=False)
+	name = db.Column(db.String, nullable=False)
+
 	def __init__(self, name):
 		super().__init__()	
 		self.name = name
