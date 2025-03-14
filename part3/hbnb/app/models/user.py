@@ -1,4 +1,4 @@
-from .basemodel import BaseModel
+from .base_model import BaseModel
 import re
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy

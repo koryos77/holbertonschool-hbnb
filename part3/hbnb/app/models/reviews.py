@@ -1,5 +1,5 @@
-from .basemodel import BaseModel
-from .place import Place
+from .base_model import BaseModel
+from .places import Place
 from .user import User
 
 class Review(BaseModel):
