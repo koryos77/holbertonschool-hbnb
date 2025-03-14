@@ -2,7 +2,7 @@ from app.models.base_model import BaseModel
 import re
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-from app import db
+from app.extensions import db
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -11,6 +11,7 @@ bcrypt = Bcrypt()
 class User(BaseModel):
     __tablename__ = 'users'
 
+    id = db.Column(db.Integer(), unique=True, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
