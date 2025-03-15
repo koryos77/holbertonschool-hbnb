@@ -1,15 +1,21 @@
 from .base_model import BaseModel
 import re
 from app.extensions import db, bcrypt
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 class User(BaseModel):
     __tablename__ = 'users'
 
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+
+    places = relationship('places', backref='User', lazy=True)
+    reviews = relationship('reviews', backref='User', lazy=True)
 
     emails = set()
 

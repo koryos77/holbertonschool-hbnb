@@ -1,6 +1,8 @@
 from .base_model import BaseModel
 from app.extensions import db
 from .user import User
+from sqlalchemy import Table, Column, Integer, ForeignKey, Float
+from sqlalchemy.orm import relationship
 
 class Place(BaseModel):
     __tablename__ = 'places'
@@ -11,7 +13,10 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey('user_id'), nullable=False)
 
+    reviews = relationship('reviews', backref='place', lazy=True)
+    amenities = relationship('amenities', lazy=True, backref=db.backref('places', lazy=True))
 
     def __init__(self, title: str, price: float, latitude: str, longitude, owner, description=None):
         super().__init__()
