@@ -1,4 +1,4 @@
-from app.persistence.repository import InMemoryRepository, SQLAlchemyRepository
+from app.persistence.repository import SQLAlchemyRepository
 from app.models.user import User
 from app.models.amenities import Amenity
 from app.models.places import Place
@@ -6,11 +6,6 @@ from app.models.reviews import Review
 
 class HBnBFacade:
     def __init__(self):
-        self.user_repo = InMemoryRepository()
-        self.amenity_repo = InMemoryRepository()
-        self.place_repo = InMemoryRepository()
-        self.review_repo = InMemoryRepository()
-
         self.user_repo = SQLAlchemyRepository(User)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
         self.place_repo = SQLAlchemyRepository(Place)
@@ -21,7 +16,8 @@ class HBnBFacade:
         user = User(
             first_name=user_data['first_name'],
             last_name=user_data['last_name'],
-            email=user_data['email']
+            email=user_data['email'],
+            is_admin=user_data.get('is_admin', False)
         )
         user.hash_password(user_data['password'])
         self.user_repo.add(user)
@@ -84,6 +80,24 @@ class HBnBFacade:
     def update_place(self, place_id, place_data):
         self.place_repo.update(place_id, place_data)
 
+    def delete_place(self, place_id):
+        place = self.place_repo.get(place_id)
+        if not place:
+            raise ValueError("Place not found")
+        
+        owner = place.owner
+        if owner and place in owner.places:
+            owner.places.remove(place)
+
+        for amenity in place.amenity:
+            if place in amenity.places:
+                amenity.places.remove(place)
+        
+        for review in list(place.reviews):
+            self.delete_review(review.id)
+        
+        self.place_repo.delete(place_id)
+
     # REVIEWS
     def create_review(self, review_data):
         user = self.user_repo.get(review_data['user_id'])
@@ -121,6 +135,8 @@ class HBnBFacade:
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
+        if not review:
+            raise KeyError('Review not found')
         
         user = self.user_repo.get(review.user.id)
         place = self.place_repo.get(review.place.id)

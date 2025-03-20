@@ -1,32 +1,27 @@
 from .base_model import BaseModel
 import re
 from app.extensions import db, bcrypt
-from sqlalchemy.orm import relationship
 
 class User(BaseModel):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    places = relationship('places', backref='User', lazy=True)
-    reviews = relationship('reviews', backref='User', lazy=True)
+    places = db.relationship('Place', backref='user', lazy='dynamic')
+    reviews = db.relationship('Review', backref='user', lazy='dynamic')
 
-    emails = set()
-
-    def __init__(self, first_name, last_name, email, is_admin=False):
+    def __init__(self, first_name, last_name, email, is_admin=False, password=None):
         super().__init__()
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = None
         self.is_admin = is_admin
-        self.places = []
-        self.reviews = []
+        if password:
+            self.hash_password
     
     @property
     def first_name(self):
@@ -37,7 +32,7 @@ class User(BaseModel):
         if not isinstance(value, str):
             raise TypeError("First name must be a string")
         super().is_max_length('First name', value, 50)
-        self.__first_name = value
+        self._first_name = value
 
     @property
     def last_name(self):
@@ -48,7 +43,7 @@ class User(BaseModel):
         if not isinstance(value, str):
             raise TypeError("Last name must be a string")
         super().is_max_length('Last name', value, 50)
-        self.__last_name = value
+        self._last_name = value
 
     @property
     def email(self):
@@ -62,10 +57,8 @@ class User(BaseModel):
             raise ValueError("Invalid email format")
         if value in User.emails:
             raise ValueError("Email already exists")
-        if hasattr(self, "_User__email"):
-            User.emails.discard(self.__email)
-        self.__email = value
-        User.emails.add(value)
+        super().is_max_length('email', value, 120)
+        self._email = value
 
     def hash_password(self, password):
         """Hashes the password before storing it."""
@@ -83,7 +76,7 @@ class User(BaseModel):
     def is_admin(self, value):
         if not isinstance(value, bool):
             raise TypeError("Is Admin must be a boolean")
-        self.__is_admin = value
+        self._is_admin = value
 
     def add_place(self, place):
         """Add an amenity to the place."""
@@ -102,5 +95,6 @@ class User(BaseModel):
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'email': self.email
+            'email': self.email,
+            'is_admin': self.is_admin
         }
