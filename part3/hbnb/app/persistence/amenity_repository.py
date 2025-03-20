@@ -1,6 +1,5 @@
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.amenities import Amenity
-from app.extensions import db
 
 
 class AmenityRepository(SQLAlchemyRepository):

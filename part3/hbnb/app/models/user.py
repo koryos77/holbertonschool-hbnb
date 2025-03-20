@@ -2,7 +2,6 @@ from .base_model import BaseModel
 import re
 from app.extensions import db, bcrypt
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 class User(BaseModel):
     __tablename__ = 'users'

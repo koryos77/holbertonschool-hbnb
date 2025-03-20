@@ -1,6 +1,5 @@
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.places import Place
-from app.extensions import db
 
 
 class PlaceRepository(SQLAlchemyRepository):

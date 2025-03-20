@@ -1,7 +1,6 @@
 from .base_model import BaseModel
 from app.extensions import db
 from .user import User
-from sqlalchemy import Table, Column, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 class Place(BaseModel):
