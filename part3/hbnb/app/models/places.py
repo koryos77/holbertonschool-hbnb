@@ -6,18 +6,18 @@ from sqlalchemy.orm import relationship
 class Place(BaseModel):
     __tablename__ = 'places'
 
-    id = db.Column(db.String(36), nullable=False)
+    id = db.Column(db.Integer, nullable=False, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.String(36), db.ForeignKey('user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Corrected the ForeignKey reference
 
-    reviews = relationship('reviews', backref='place', lazy=True)
-    amenities = relationship('amenities', lazy=True, backref=db.backref('places', lazy=True))
+    reviews = relationship('Review', backref='place', lazy=True)
+    amenities = relationship('Amenity', lazy=True, backref=db.backref('places', lazy=True))
 
-    def __init__(self, title: str, price: float, latitude: str, longitude, owner, description=None):
+    def __init__(self, title: str, price: float, latitude: float, longitude: float, owner: User, description=None):
         super().__init__()
         self.title = title
         self.description = description
