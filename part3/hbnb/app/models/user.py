@@ -56,7 +56,7 @@ class User(BaseModel):
             raise TypeError("Email must be a string")
         if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
             raise ValueError("Invalid email format")
-        if value in User.emails:
+        if value in User.email:
             raise ValueError("Email already exists")
         super().is_max_length('email', value, 120)
         self._email = value
