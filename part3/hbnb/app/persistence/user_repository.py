@@ -1,37 +1,43 @@
-from app.persistence.repository import SQLAlchemyRepository
 from app.models.user import User
+from sqlalchemy import func
+from app.extensions import db
+from app.persistence.repository import SQLAlchemyRepository
 
 
 class UserRepository(SQLAlchemyRepository):
     def __init__(self):
         super().__init__(User)
     
+    def get_by_attribute(self, attribute, value):
+        if attribute == '_email':
+            return self.model.query.filter(func.lower(getattr(self.model, attribute)) == value.lower()).first()
+        return super().get_by_attribute(attribute, value)
+
     def get_user_by_email(self, email):
-        """Get a user by email"""
         return self.model.query.filter_by(email=email).first()
+
+    def get_user_by_first_name(self, first_name):
+        return self.model.query.filter_by(first_name=first_name).first()
+
+    def get_user_by_last_name(self, last_name):
+        return self.model.query.filter_by(last_name=last_name).first()
+
+    def get_users_by_role(self, role):
+        return User.query.filter_by(role=role).all()
     
-    def create_user(self, user_data):
-        """Create a new user"""
-        if self.model.query.filter_by(email=user_data.get('email')).first():
-            raise ValueError('Email already registered')
-
-        user = User(**user_data)
-        self.add(user)
-        return user
-
+    def get_all_users(self):
+        return self.model.query.all()
     
-    def update_user(self, user_id, user_data):
-        """Update a user"""
-        user = self.model.query.get(user_id)
-        if not user:
-            return None
-
-        if 'email' in user_data and user_data['email'] != user.email:
-            if self.model.query.filter_by(email=user_data['email']).first():
-                raise ValueError('Email already registered')
-
-        for key, value in user_data.items():
-            setattr(user, key, value)
-
-        self.add(user)
-        return user
+    def deactivate_user(self, user_id):
+        user = self.get_by_attribute(user_id)
+        if user:
+            user.is_active = False
+            db.session.commit()
+            return True
+        return False
+    
+    def authenticate_user(self, email, password):
+        user = self.get_user_by_email(email)
+        if user and user.verify_password(password):
+            return user
+        return None

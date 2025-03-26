@@ -1,4 +1,8 @@
 from app.persistence.repository import SQLAlchemyRepository
+from app.persistence.amenity_repository import AmenityRepository
+from app.persistence.place_repository import PlaceRepository
+from app.persistence.review_repository import ReviewRepository
+from app.persistence.user_repository import UserRepository
 from app.models.user import User
 from app.models.amenities import Amenity
 from app.models.places import Place
@@ -6,10 +10,15 @@ from app.models.reviews import Review
 
 class HBnBFacade:
     def __init__(self):
-        self.user_repo = SQLAlchemyRepository(User)
-        self.amenity_repo = SQLAlchemyRepository(Amenity)
-        self.place_repo = SQLAlchemyRepository(Place)
-        self.review_repo = SQLAlchemyRepository(Review)
+        self.user_repo = UserRepository()
+        self.amenity_repo = AmenityRepository()
+        self.place_repo = PlaceRepository()
+        self.review_repo = ReviewRepository()
+
+    # ADMIN
+    def admin_verification(self):
+        users = self.get_users()
+        return any(user.is_admin for user in users)
 
     # USER
     def create_user(self, user_data):
@@ -33,7 +42,13 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
     
     def update_user(self, user_id, user_data):
+        user = self.get_user(user_id)
+        user.first_name = user_data.get('first_name', user.first_name)
+        user.last_name = user_data.get('last_name', user.last_name)
+        user.email = user_data.get('email', user.email)
+
         self.user_repo.update(user_id, user_data)
+        return user
     
     # AMENITY
     def create_amenity(self, amenity_data):

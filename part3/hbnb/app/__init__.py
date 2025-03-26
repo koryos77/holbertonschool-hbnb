@@ -6,21 +6,21 @@ from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
 from app.api.v1.auth import api as auth_api
 from app.api.v1.protected import api as protected_api
-from app.api.v1.admin import api as admin_api
 from app.extensions import bcrypt, jwt, db
 
 def create_app(config_class="config.DevelopmentConfig"):
     # Function to initialize and configure the Flask app.
     app = Flask(__name__)
     app.config.from_object(config_class)
-
-    # Initialize the app with bcrypt, jwt, and db extensions
-    bcrypt.init_app(app)
-    jwt.init_app(app)
-    db.init_app(app)
-
     # Create the API instance, with version and description.
     api = Api(app, version='1.0', title='HBnB API', description='HBnB Application API')
+
+    # Initialize the app with bcrypt, jwt, and db extensions
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
+    bcrypt.init_app(app)
+    jwt.init_app(app)
 
     # Adding API namespaces, which map to the different resources in your app.
     api.add_namespace(users_ns, path='/api/v1/users')
@@ -28,8 +28,6 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(places_ns, path='/api/v1/places')
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(auth_api, path='/api/v1/auth')
-    api.add_namespace(protected_api, path='/api/v1/protected')
-    api.add_namespace(admin_api, path='/api/v1/admin')
     return app
 
 if __name__ == "__main__":

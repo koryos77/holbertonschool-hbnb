@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS places (
     latitude FLOAT NOT NULL,
     Longitude FLOAT NOT NULL,
     owned_id CHAR(36) NOT NULL,
-    FOREIGN KEY (owned_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 -- Review table
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS reviews (
     user_id CHAR(36) NOT NULL,
     place_id CHAR(36) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (place_id) REFERENCES places(id)
+    FOREIGN KEY (place_id) REFERENCES places(id),
+    UNIQUE (user_id, place_id)
 );
 
 -- Amenity table
