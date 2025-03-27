@@ -18,6 +18,7 @@ def create_app(config_class="config.DevelopmentConfig"):
     # Initialize the app with bcrypt, jwt, and db extensions
     db.init_app(app)
     with app.app_context():
+        db.drop_all()
         db.create_all()
     bcrypt.init_app(app)
     jwt.init_app(app)

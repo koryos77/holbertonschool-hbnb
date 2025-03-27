@@ -7,7 +7,7 @@ class Review(BaseModel):
 	__tablename__ = 'reviews'
 	__table_args__ = {'extend_existing': True} 
 
-	id = db.Column(db.Integer, nullable=False, primary_key=True)
+	id = db.Column(db.String, nullable=False, primary_key=True)
 	text = db.Column(db.String(500), nullable=False)
 	rating = db.Column(db.Integer, nullable=False)
 	place_id = db.Column(db.String(36), db.ForeignKey('places.id'), nullable=False)

@@ -5,10 +5,10 @@ from app.extensions import db, bcrypt
 class User(BaseModel):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, nullable=False, primary_key=True)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
+    id = db.Column(db.String, nullable=False, primary_key=True)
+    _first_name = db.Column("first_name", db.String(50), nullable=False)
+    _last_name = db.Column("last_name", db.String(50), nullable=False)
+    _email = db.Column("email", db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
@@ -22,12 +22,12 @@ class User(BaseModel):
         self.email = email
         self.is_admin = is_admin
         if password:
-            self.hash_password
-    
+            self.hash_password(password)
+
     @property
     def first_name(self):
-        return self.__first_name
-    
+        return self._first_name
+
     @first_name.setter
     def first_name(self, value):
         if not isinstance(value, str):
@@ -37,7 +37,7 @@ class User(BaseModel):
 
     @property
     def last_name(self):
-        return self.__last_name
+        return self._last_name
 
     @last_name.setter
     def last_name(self, value):
@@ -48,7 +48,7 @@ class User(BaseModel):
 
     @property
     def email(self):
-        return self.__email
+        return self._email
 
     @email.setter
     def email(self, value):
@@ -56,9 +56,9 @@ class User(BaseModel):
             raise TypeError("Email must be a string")
         if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
             raise ValueError("Invalid email format")
-        if value in User.email:
+        existing_user = db.session.query(User).filter_by(_email=value).first()
+        if existing_user and existing_user.id != getattr(self, 'id', None):
             raise ValueError("Email already exists")
-        super().is_max_length('email', value, 120)
         self._email = value
 
     def hash_password(self, password):
@@ -71,7 +71,7 @@ class User(BaseModel):
 
     @property
     def is_admin(self):
-        return self.__is_admin
+        return self._is_admin
     
     @is_admin.setter
     def is_admin(self, value):

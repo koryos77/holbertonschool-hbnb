@@ -4,7 +4,7 @@ from app.extensions import db
 class Amenity(BaseModel):
 	__tablename__ = 'reviews'
 
-	id = db.Column(db.Integer, nullable=False, primary_key=True)
+	id = db.Column(db.String, nullable=False, primary_key=True)
 	name = db.Column(db.String, nullable=False)
 
 	def __init__(self, name):
