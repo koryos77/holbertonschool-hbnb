@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS places (
     description TEXT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     latitude FLOAT NOT NULL,
-    Longitude FLOAT NOT NULL,
-    owned_id CHAR(36) NOT NULL,
+    longitude FLOAT NOT NULL,
+    owner_id CHAR(36) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
