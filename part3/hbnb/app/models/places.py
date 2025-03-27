@@ -12,7 +12,7 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Corrected the ForeignKey reference
+    user_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)  # Corrected the ForeignKey reference
 
     reviews = relationship('Review', backref='place', lazy=True)
     amenities = relationship('Amenity', lazy=True, backref=db.backref('places', lazy=True))
