@@ -16,6 +16,9 @@ class Place(BaseModel):
 
     reviews = relationship('Review', backref='place', lazy=True)
     amenities = relationship('Amenity', lazy=True, backref=db.backref('places', lazy=True))
+    # amenities = db.relationship('Amenity', secondary='place_amenity', backref=db.backref('places', lazy=True), lazy='dynamic')
+    # user = db.relationship('User', back_populates='places', lazy=True)
+    # reviews = db.relationship('Review', back_populates='place', lazy=True)
 
     def __init__(self, title: str, price: float, latitude: float, longitude: float, owner: User, description=None):
         super().__init__()
