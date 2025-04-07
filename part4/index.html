@@ -5,18 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Places</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <script>
+        function loadHTML(file, elementId) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                });
+        }
+
+        window.onload = function() {
+            loadHTML('header.html', 'header');
+            loadHTML('footer.html', 'footer');
+        }
+    </script>
 </head>
 <body>
-    <!--Add favicon !!-->
-    <!--Add something to add header and footer to all pages-->
-    <header>
-        <nav>
-            <img src="assets/logo.png" alt="Logo">
-            <a href="login.html" id="login-link">Login</a>
-        </nav>
-    </header>
+    <!--HEADER-->
+
+    <div id="header"></div>
+
+    <!--MAIN-->
+
     <main>
         <h1>Available Places</h1>
+        <hr id="hr">
         <section id="filter">
             <label for="price-filter">Max Price:</label>
             <select id="price-filter">
@@ -24,9 +38,30 @@
             </select>
         </section>
         <section id="places-list">
-            <!-- List of places will be populated dynamically -->
+            <div class="place-card">
+                <a href="#"><h3 class="place-name">Beach House</h3></a>
+                <a href="#"><img id="img" src="places_photos/beach_house.jpg" alt="Beach House"></a>
+                <p class="place-price">Price per night: $200<!--Add function to add dynamic price--></p>
+                <button class="details-button">View Details</button>
+            </div>
+            <div class="place-card">
+                <a href="#"><h3 class="place-name">Mountain Cabin</h3></a>
+                <a href="#"><img id="img" src="places_photos/mountain_cabin.jpg" alt="Mountain Cabin"></a>
+                <p class="place-price">Price per night: $125<!--Add function to add dynamic price--></p>
+                <button class="details-button">View Details</button>
+            </div>
+            <div class="place-card">
+                <a href="#"><h3 class="place-name">Modern Apartment</h3></a>
+                <a href="#"><img id="img" src="places_photos/modern_apartment.jpg" alt="Modern Apartment"></a>
+                <p class="place-price"> Price per night: $250<!--Add function to add dynamic price--></p>
+                <button class="details-button">View Details</button>
+            </div>
         </section>
     </main>
+
+    <!--FOOTER-->
+
+    <div id="footer"></div>
     <script src="scripts.js"></script>
 </body>
 </html>

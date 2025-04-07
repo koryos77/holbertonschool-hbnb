@@ -1,7 +1,4 @@
-/* 
-  This is a SAMPLE File to get you started. Follow the instructions on the project to complete the tasks. 
-  You'll probably need to override some of theese styles.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
 * {
     box-sizing: border-box;
@@ -10,23 +7,238 @@
     font-family: Arial, sans-serif;
 }
 
+html, body {
+    height : 100%;
+    margin: 0;
+}
+
 body {
     background-color: #f4f4f4;
     color: #333;
+    font-family: "Roboto Flex", sans-serif;
+    font-weight: 500;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+/* HEADER */
+
 header {
-    background-color: #333;
+    background-color: #93B5C6;
     color: #fff;
     padding: 1rem;
+    border-bottom: #be2e1a solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 
 nav a {
-    color: #fff;
+    color: black;
+    font-weight: 550;
     text-decoration: none;
     margin-left: 1rem;
 }
 
+.search-bar {
+    width: 70%;
+}
+
+#search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#search-input {
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+#search-button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #be2e1a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+#search-button:hover {
+    background-color: #f11f04d2;
+    border-radius: 25px;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+.home {
+    margin: auto;
+    transition: font-size 0.3s;
+}
+
+.home:hover {
+    font-size: larger;
+    transition: font-size 0.3s;
+}
+
+.header-places {
+    margin: auto;
+    transition: font-size 0.3s;
+}
+
+.header-places:hover {
+    font-size: larger;
+    transition: font-size 0.3s;
+}
+
+.login-button {
+    margin: auto;
+    transition: font-size 0.3s;
+}
+
+.login-button:hover {
+    font-size: larger;
+    transition: font-size 0.3s;
+}
+
+/* MAIN */
+
 main {
     padding: 2rem;
+    flex-grow: 1;
+}
+
+h1 {
+    text-align: center;
+    padding: 25px 0;
+}
+
+#filter {
+    padding: 25px 0;
+    text-align: center;
+    font-size: larger;
+    font-weight: 550;
+}
+
+#places-list {
+    display: flex;
+    height: 90%;
+}
+.place-card {
+    margin: 20px;
+    padding: 10px;
+    height: 90%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+.place-name {
+    text-align: center;
+    padding: 10px 0 20px;
+    transition: color 0.6s;
+
+}
+
+.place-name:hover {
+    color: #be2e1a;
+    transition: color 0.3s,;
+}
+
+.place-price {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+#img {
+    max-width: 100%;
+    object-fit: cover;
+    height: 85%;
+    border-radius: 10px;
+    transition: height 0.3s;
+}
+
+#img:hover {
+    height: 88%;
+    transition: height 0.3s;
+}
+
+.details-button {
+    width: 30%;
+    height: 1.4rem;
+    margin-left: 35%;
+    margin-top: 10px;
+    border-radius: 15px;
+    transition: background-color 0.6s, color 0.6s, font-size 0.6s, border-width 2px;
+}
+
+.details-button:hover {
+    background-color: #be2e1a;
+    color: whitesmoke;
+    font-size: medium;
+    border-width: 2px;
+    transition: 0.3s;
+    cursor: pointer;
+
+}
+
+/* PLACE.HTML */
+
+.review-card {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.review-card h4 {
+    text-align: center;
+}
+
+#place-details {
+    display: flex;
+}
+
+#reviews {
+    display: flex;
+}
+
+.place-info h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+/* FOOTER */
+
+#footer {
+    background-color: #93B5C6;
+    height: 100px;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 100px;
 }
