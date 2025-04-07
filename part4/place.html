@@ -5,121 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Place Details</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="assets/icon.png">
-    <script>
-        function loadHTML(file, elementId) {
-            fetch(file)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById(elementId).innerHTML = data;
-                });
-        }
-
-        // Simuler un utilisateur connecté
-        const userLoggedIn = true;  // Change this to false if not logged in
-
-        window.onload = function() {
-            loadHTML('header.html', 'header');
-            loadHTML('footer.html', 'footer');
-
-            if (userLoggedIn) {
-                document.getElementById('add-review').style.display = 'block';
-                document.getElementById('review-button').style.display = 'block'; // Maybe delete
-            } else {
-                document.getElementById('add-review').style.display = 'none';
-                document.getElementById('review-button').style.display = 'none'; // Maybe delete
-            }
-
-            // Simulate three places with rating
-            loadPlaceDetails();
-            loadReviews();
-        };
-
-        function loadPlaceDetails() {
-            const places = [
-                {
-                    name: "Beach House",
-                    host: "John Marston",
-                    price: "$200",
-                    description: "A lovely house by the beach, perfect for a relaxing holiday with family or friends.",
-                    amenities: "incoming" //Add dynamic icons
-                },
-                {
-                    name: "Mountain Cabin",
-                    host: "Jenny Straford",
-                    price: "$125",
-                    description: "A cozy cabin in the mountains with stunning views and a peaceful environment.",
-                    amenities: "incoming" //Add dynamic icons
-                },
-                {
-                    name: "Modern Apartment",
-                    host: "Thorwald Ragnarson",
-                    price: "$250",
-                    description: "A modern apartment in the city center, close to all major attractions.",
-                    amenities: "incoming" //Add dynamic icons
-                }
-            ];
-
-            let placeDetailsHtml = '';
-            places.forEach(place => {
-                placeDetailsHtml += `
-                    <div class="place-info">
-                        <h2>${place.name}</h2>
-                        <p><strong>Host:</strong> ${place.host}</p>
-                        <p><strong>Price per Night:</strong> ${place.price}</p>
-                        <p><strong>Description:</strong> ${place.description}</p>
-                        <p><strong>Amenities:</strong> ${place.amenities}</p>
-                    </div>
-                `;
-            });
-
-            document.getElementById('place-details').innerHTML = placeDetailsHtml;
-        }
-
-        function loadReviews() {
-            const reviews = [
-                {
-                    place: "Beach House",
-                    reviews: [
-                        { username: 'Alice', comment: 'Amazing place! Had a great time.', rating: 5 },
-                        { username: 'Bob', comment: 'Nice location, but could use some improvements.', rating: 3 }
-                    ]
-                },
-                {
-                    place: "Mountain Cabin",
-                    reviews: [
-                        { username: 'Charlie', comment: 'Perfect escape from the city. Peaceful and quiet!', rating: 5 }
-                    ]
-                },
-                {
-                    place: "Modern Apartment",
-                    reviews: [
-                        { username: 'David', comment: 'Great location but the apartment was a bit small.', rating: 4 },
-                        { username: 'Emma', comment: 'Had a wonderful stay, very convenient for sightseeing!', rating: 5 }
-                    ]
-                }
-            ];
-
-            let reviewsHtml = '';
-            reviews.forEach(place => {
-                reviewsHtml += `<h3>Reviews for ${place.place}</h3>`;
-                place.reviews.forEach(review => {
-                    reviewsHtml += `
-                        <div class="review-card">
-                            <h4>${review.username}</h4>
-                            <p><strong>Rating:</strong> ${review.rating} stars</p>
-                            <p>${review.comment}</p>
-                        </div>
-                    `;
-                });
-            });
-
-            document.getElementById('reviews').innerHTML = reviewsHtml;
-        }
-    </script>
 </head>
 <body>
-    <div id="header"></div>
     <main>
         <section id="place-details">
             <!-- Place details will be populated dynamically -->
@@ -127,22 +14,16 @@
         <section id="reviews">
             <!-- Reviews will be populated dynamically -->
         </section>
-        <section id="add-review" style="display:none;">
+        <section id="add-review">
             <h2>Add a Review</h2>
             <form id="review-form">
                 <label for="review-text">Review:</label>
                 <textarea id="review-text" name="review-text" required></textarea>
-
+                
                 <button type="submit">Submit</button>
             </form>
         </section>
-
-        <section id="review-button" style="display:none;">
-            <a href="add_review.html"><button>View Details</button></a>
-        </section>
-        </section>
     </main>
-    <div id="footer"></div>
     <script src="scripts.js"></script>
 </body>
 </html>
