@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Place Details</title>
+    <title>{{ place.name }}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
     <img src="{{ url_for('static', filename='assets/icon.png') }}" alt="Icon">
 </head>
@@ -11,7 +11,10 @@
     {% include 'header.html' %}
     <main>
         <section id="place-details">
-            <!-- Place details will be populated dynamically -->
+            <h1>{{ place.name }}</h1>
+            <img src="{{ url_for('static', filename=place.image) }}" alt="{{ place.name }}" class="place-image">
+            <p>{{ place.description }}</p>
+            <a href="{{ url_for('index') }}">Retour à la page d'accueil</a>
         </section>
         <section id="reviews">
             <!-- Reviews will be populated dynamically -->

@@ -33,5 +33,12 @@ def review_route():
 def login_route():
     return render_template('login.html')
 
+@app.route('/place/<int:place_id>')
+def place_description(place_id):
+    place = next((place for place in places if place['id'] == place_id), None)
+    if place:
+        return render_template('place.html', place=place)
+    return "Place not found", 404
+
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
