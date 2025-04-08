@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="place-details">
+        <div class="place-info">
+            <h1>host Informations</h1>
+            <p><strong>Name :</strong>Kady</p>
+            <p><strong>Contact :</strong>Kady@email.com</p>
+        </div>
+
+        <div class="place-info">
+            <h2>Prix</h2>
+            <p><strong>Price per night</strong>$150</p>
+        </div>
+
+        <div class="place-info">
+            <h3>Amenities</h2>
+            <ul>
+                <li>Free Wi-Fi</li>
+                <li>Private garden</li>
+                <li>swimming pooll</li>
+                <li>Free parking</li>
+                <li>Air conditioning</li>
+                <li>24/7 Security</li>
+            </ul>
+        </div>
+    </div>
+    <div class="review-card">
+        <p class="comment">Had a wonderful experience. Would come back again!</p>
+        <p class="user-name">Kady</p>
+        <p class="rating">Rating: 5/5</p>
+    </div>
+    <div class="review-card">
+        <p class="comment">This is a great place to stay! Highly recommend it!</p>
+        <p class="user-name">Amara</p>
+        <p class="rating">Rating: 5/5</p>
+    </div>
+    <div id="add-review-container">
+        <button id="add-review_btn" cxlass="add-review-btn" onclick="Window.location.href='add_review.html'">Add Review</button>
+    </div>
+    </div>
+    <main>
+        <section id="place-details">
+            <!-- Place details will be populated dynamically -->
+        </section>
+        <section id="reviews">
+            <!-- Reviews will be populated dynamically -->
+        </section>
+        <section id="add-review">
+            <h2>Add a Review</h2>
+            <form id="review-form">
+                <label for="review-text">Review:</label>
+                <textarea id="review-text" name="review-text" required></textarea>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>

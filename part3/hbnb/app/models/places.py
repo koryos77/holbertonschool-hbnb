@@ -4,8 +4,7 @@ from .user import User
 from sqlalchemy.orm import relationship
 
 class Place(BaseModel):
-    __tablename__ = 'places'
-
+    '__tablename__ '= 'places'
     id = db.Column(db.String, nullable=False, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String, nullable=False)
