@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Places</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+</head>
+<body>
+
+<!-- ------ HEADER ------ -->
+<header>
+    <nav>
+        <section class="logo">
+            <a href="index.html"><img src="assets/logo.png" alt="Logo"></a>
+        </section>
+        <div class="header-links">
+            <section class="home">
+                <a href="index.html">Home</a>
+            </section>
+            <section class="header-places">
+                <a href="place.html">Places</a>
+            </section>
+            <section class="login-button">
+                <a href="login.html" id="login-link">Login</a>
+            </section>
+        </div>
+    </nav>
+</header>
+
+<!-- ------ MAIN ------ -->
+<main>
+    <section id="h1"><h1>Available places</h1></section>
+    <section id="filter">
+        <label for="price-filter">Max Price:</label>
+        <select id="price-filter">
+            <!-- Options will be populated dynamically -->
+        </select>
+    </section>
+    <section id="places-list">
+        <!-- List of places will be populated dynamically -->
+        <div class="place-cards">
+            <a class="details-button" href="#"><button class="details-button">View Details</button></a>
+        </div>
+        <div class="place-cards">
+            <a class="details-button" href="#"><button class="details-button">View Details</button></a>
+        </div>
+        <div class="place-cards">
+            <a class="details-button" href="#"><button class="details-button">View Details</button></a>
+        </div>
+    </section>
+</main>
+
+<!-- ------ FOOTER ------ -->
+<footer>
+    <p>&copy; 2025 HBnB Evolution. All rights reserved.</p>
+</footer>
+<script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Review</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+</head>
+<body>
+
+<!-- ------ HEADER ------ -->
+<header>
+    <nav>
+        <section class="logo">
+            <a href="index.html"><img src="assets/logo.png" alt="Logo"></a>
+        </section>
+        <div class="header-links">
+            <section class="home">
+                <a href="index.html">Home</a>
+            </section>
+            <section class="header-places">
+                <a href="place.html">Places</a>
+            </section>
+            <section class="login-button">
+                <a href="login.html" id="login-link">Login</a>
+            </section>
+        </div>
+    </nav>
+</header>
+
+<!-- ------ MAIN ------ -->
+<main>
+    <!-- Add something to idfentify the place you're reviewing -->
+    <form id="review-form">
+        <h2>Add a Review</h2>
+        <label for="review">Your Review:</label>
+        <textarea id="review" name="review" required></textarea>
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating" required>
+            <!-- Options for rating -->
+        </select>
+        <button type="submit">Submit Review</button>
+    </form>
+</main>
+
+<!-- ------ FOOTER ------ -->
+<footer>
+    <p>&copy; 2025 HBnB Evolution. All rights reserved.</p>
+</footer>
+<script src="scripts.js"></script>
+</body>
+</html>

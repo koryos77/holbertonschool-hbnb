@@ -1,0 +1,151 @@
+/* 
+  This is a SAMPLE File to get you started. Follow the instructions on the project to complete the tasks. 
+  You'll probably need to override some of theese styles.
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------ HEADER ------ */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+}
+
+.header-links {
+    display: flex;
+    width: 20%;
+    justify-content: flex-end;
+    gap: 1.2rem;
+    margin-right: 50px;
+}
+
+.home, .header-places, .login-button {
+    transition: font-size 0.3s;
+}
+
+.home:hover {
+    font-size: large;
+    transition: 0.3s;
+}
+
+.header-places:hover {
+    font-size: large;
+    transition: 0.3s;
+}
+
+.login-button:hover {
+    font-size: large;
+    transition: 0.3s;
+}
+
+/* ------ MAIN ------ */
+main {
+    padding: 2rem;
+    flex: 1;
+}
+
+h1 {
+    text-align: center;
+}
+
+#filter {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#places-list {
+    display: flex;
+    justify-content: space-around;
+    height: 75%;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.place-cards {
+    display: flex;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.details-button {
+    height: 30px;
+    width: 150px;
+    text-align: center;
+    margin: auto auto 10px auto;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+/* ------ FOOTER ------ */
+footer {
+    text-align: center;
+    background-color: #c44d38fb;
+    padding: 1rem;
+    width: 100%;
+}
+
+/* ------ PLACES ------ */
+#place-description {
+    text-align: center;
+    margin-top: 30px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.review-cards {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+h3 {
+    margin: 20px;
+}
+
+h2 {
+    margin: 20px;
+    margin-top: 50px;
+}
+
+label {
+    margin: 20px;
+}
+
+/* ------ REVIEWS ------ */
+
+/* ------ LOGIN ------ */

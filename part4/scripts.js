@@ -4,5 +4,5 @@
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    /* DO SOMETHING */
-  });
+  /* DO SOMETHING */
+});
