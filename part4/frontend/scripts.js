@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch places from API
   async function fetchPlaces(token) {
     try {
-      console.log('Fetching places with token:', token);
       const response = await fetch('http://127.0.0.1:5501/api/v1/places', {
         method: 'GET',
         headers: {
