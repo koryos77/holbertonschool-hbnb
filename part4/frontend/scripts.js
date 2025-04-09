@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Connection failed : ' + (errorData.message || response.statusText));
         }
       } catch (error) {
-        alert('A network error has occured : ' + error.message);
+        alert('A network error has occurred : ' + error.message);
       }
     });
   }
