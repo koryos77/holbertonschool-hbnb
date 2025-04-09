@@ -1,8 +1,3 @@
-/* 
-  This is a SAMPLE FILE to get you started.
-  Please, follow the project instructions to complete the tasks.
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
   // Prevent reload of webpage with preventDefault()
@@ -26,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (response.ok) {
           const data = await response.json();
-          document.cookie = `token=${data.access_token}; path=/`;
+          document.cookie = `token=${data.access_token}; path=/; max-age=5200`; //Expires in 2hours
           window.location.href = 'index.html';
         } else {
           const errorData = await response.json()
@@ -37,4 +32,95 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Function to get the cookie by his name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  // Check authentication and manage connection link
+  function checkAuthentication() {
+    const token = getCookie('token');
+    const loginLink = document.getElementById('login-link');
+
+    if (!token) {
+      if (loginLink) loginLink.style.display = 'block'; // display if no token
+    } else {
+      if (loginLink) loginLink.style.display = 'none'; // Hide if token
+      fetchPlaces(token);
+    }
+  }
+
+  // Fetch places from API
+  async function fetchPlaces(token) {
+    try {
+      const response = await fetch('http://127.0.0.1:5501/api/v1/places', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include JWT in the header
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const places = await response.json();
+        displayPlaces(places);
+      } else {
+        console.error('Error during loading places:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Network Error:', error.message);
+    }
+  }
+
+  // Display places on the page
+  function displayPlaces(places) {
+    const placesList = document.getElementById('places-list');
+    if (!placesList) return; // Leave if element doesn't exist
+
+    placesList.innerHTML = ''; // Empty actual content
+
+    places.forEach(place => {
+      const placeElement = document.createElement('div');
+      placeElement.className = 'place-item'; // for css (??)
+      placeElement.dataset.price = place.price; // stock price for filtering
+      placeElement.innerHTML = `
+        <h2>${place.name}</h2>
+        <p>${place.description}</p>
+        <p>${place.latitude}</p>
+        <p>${place.longitude}</p>
+        <p>Price per night: $${place.price}</p>
+      `;
+      placesList.appendChild(placeElement);
+    });
+
+    filterPlaces(); // Apply initial filter
+  }
+
+  // Filtering places by price
+  const priceFilter = document.getElementById('price-filter');
+  if (priceFilter) {
+    priceFilter.addEventListener('change', filterPlaces);
+  }
+
+  function filterPlaces() {
+    const selectedPrice = document.getElementById('price-filter')?.value;
+    if (!selectedPrice) return; // Exit if filter doesn't exists
+
+    const placeItems = document.querySelectorAll('.place-item');
+
+    placeItems.forEach(item => {
+      const price = parseFloat(item.dataset.price);
+      if (selectedPrice === 'all' || price <= parseFloat(selectedPrice)) {
+        item.style.display = 'block'; // Display if selected
+      } else {
+        item.style.display = 'none'; // Hide if not in price selected
+      }
+    });
+  }
+
+  // Initialize page
+  checkAuthentication()
 });
