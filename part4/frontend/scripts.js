@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (response.ok) {
           const data = await response.json();
-          document.cookie = `token=${data.access_token}; path=/; max-age=5200`; //Expires in 2hours
+          document.cookie = `token=${data.access_token}; path=/; max-age=7200`; //Expires in 2 hours
           window.location.href = 'index.html';
         } else {
-          const errorData = await response.json()
+          const errorData = await response.json();
           alert('Connection failed : ' + (errorData.message || response.statusText));
         }
       } catch (error) {
-          alert('A network error has occured : ' + error.message);
+        alert('A network error has occured : ' + error.message);
       }
     });
   }
@@ -56,22 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch places from API
   async function fetchPlaces(token) {
     try {
+      console.log('Fetching places with token:', token);
       const response = await fetch('http://127.0.0.1:5501/api/v1/places', {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`, // Include JWT in the header
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
-
       if (response.ok) {
         const places = await response.json();
+        console.log('Places fetched successfully: ', places);
         displayPlaces(places);
       } else {
-        console.error('Error during loading places:', response.statusText);
+        console.error('Error during loading places:', response.status, await response.text())
       }
     } catch (error) {
-      console.error('Network Error:', error.message);
+      console.error('Network Error:', error.message)
     }
   }
 
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function filterPlaces() {
     const selectedPrice = document.getElementById('price-filter')?.value;
-    if (!selectedPrice) return; // Exit if filter doesn't exists
+    if (!selectedPrice) return; // Exit if filter doesn't exist
 
     const placeItems = document.querySelectorAll('.place-item');
 
@@ -122,5 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize page
-  checkAuthentication()
+  checkAuthentication();
 });
