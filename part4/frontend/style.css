@@ -43,21 +43,19 @@ nav a {
     justify-content: flex-end;
     gap: 1.2rem;
     margin-right: 50px;
+    transition: color 0.3s;
 }
 
-.home, .header-places, .login-button {
+.home .login-button {
     transition: font-size 0.3s;
 }
 
 .home:hover {
     font-size: large;
+    color: #c44d38fb;
     transition: 0.3s;
 }
 
-.header-places:hover {
-    font-size: large;
-    transition: 0.3s;
-}
 
 .login-button:hover {
     font-size: large;

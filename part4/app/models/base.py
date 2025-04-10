@@ -39,5 +39,3 @@ class BaseModel(db.Model):
             else:
                 result[key] = value
         return result
-        
-        
