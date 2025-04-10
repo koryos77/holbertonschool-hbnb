@@ -1,16 +1,12 @@
-/* 
-  This is a SAMPLE File to get you started. Follow the instructions on the project to complete the tasks. 
-  You'll probably need to override some of these styles.
-*/
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Flex", sans-serif;
 }
 
-html, body {
+html body {
     height: 100%;
 }
 
@@ -20,6 +16,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: "Roboto Flex", sans-serif;
 }
 
 /* ------ HEADER ------ */
@@ -149,3 +146,39 @@ label {
 /* ------ REVIEWS ------ */
 
 /* ------ LOGIN ------ */
+#login-form {
+    display: grid;
+    width: 45%;
+    justify-content: center;
+    color: #c44d38fb;
+    margin: auto;
+    background-color: #e6e6e646;
+    border-radius: 10px;
+}
+
+#login-form h2 {
+    text-align: center;
+}
+
+#login-form input {
+    padding: 5px 20px;
+    margin: 8px 5px;
+    box-sizing: border-box;
+    width: 350px;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+#login-form button {
+    border-radius: 10px;
+    width: 30%;
+    margin: 5px auto;
+    transition: background-color 0.3s;
+}
+
+#login-form button:hover {
+    background-color: #c44d38fb;
+    transition: 0.3s;
+    cursor: pointer;
+}
