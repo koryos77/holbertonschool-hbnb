@@ -19,9 +19,6 @@
             <section class="home">
                 <a href="index.html">Home</a>
             </section>
-            <section class="header-places">
-                <a href="place.html">Places</a>
-            </section>
             <section class="login-button">
                 <a href="login.html" id="login-link">Login</a>
             </section>
@@ -35,14 +32,13 @@
     <section id="filter">
         <label for="price-filter">Max Price:</label>
         <select id="price-filter">
+            <option value="all">All</option>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
-            <option value="all">All</option>
         </select>
     </section>
     <section id="places-list">
-        <!-- List of places will be populated dynamically -->
         <div class="place-cards">
             <a class="details-button" href="#"><button class="details-button">View Details</button></a>
         </div>

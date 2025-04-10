@@ -144,6 +144,9 @@ label {
     margin: 20px;
 }
 
+#place-details input {
+    resize: none;
+}
 /* ------ REVIEWS ------ */
 
 /* ------ LOGIN ------ */
