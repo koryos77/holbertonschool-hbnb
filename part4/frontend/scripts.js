@@ -141,10 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <h1>${place.title}</h1>
       </div>
       <div id="place-description">
-        <h4>Host: ${place.owner.first_name} ${place.owner.last_name}</h4>
+        <h4>Host: ${place.owner_id}</h4>
         <h4>Price per night: $${place.price}</h4>
         <h4>Description: ${place.description}</h4>
-        <h4>Amenities: ${place.amenities.length > 0 ? place.amenities.join(', ') : 'No amenity in this place.'}</h4>
+        <h4>Latitude: ${place.latitude}</h4>
+        <h4>Longitude: ${place.longitude}</h4>
+        <h4>${place.location}</h4>
+        <h4>Amenities: ${place.amenities || 'No amenity in this place.'}</h4>
       </div>
     `;
     const reviewsSection = document.getElementById('reviews');

@@ -47,8 +47,10 @@ def _seed_places():
                 description="House on the beach. Enjoy the sunset",
                 latitude= 40.7128,
                 longitude= 74.0060,
-                price=45,
-                owner=admin
+                location="Los Angeles",
+                price=210,
+                owner=admin,
+                amenity=["WiFi", "Air Conditioning", "Swimming Pool"]
 
             ),
             Place(
@@ -56,8 +58,10 @@ def _seed_places():
                 description="Cozy cabin in the woods.",
                 latitude= 30.7129,
                 longitude= 75.0050,
-                price=10,
-                owner=admin
+                location="Novossibirsk",
+                price=60,
+                owner=admin,
+                amenity=["WiFI", "Swimming Pool"]
 
             ),
             Place(
@@ -65,8 +69,10 @@ def _seed_places():
                 description="Cozy cabin in the mountain",
                 latitude= 35.8521,
                 longitude= 80.5412,
+                location="Interlaken",
                 price=110,
-                owner=admin
+                owner=admin,
+                amenity="WiFi"
             ),
         ]
         db.session.add_all(places)
