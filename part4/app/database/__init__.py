@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
+from app.models.review import Review
 
 def init_db():
     """Initialize the database by creating tables."""
@@ -49,9 +50,7 @@ def _seed_places():
                 longitude= 74.0060,
                 location="Los Angeles",
                 price=210,
-                owner=admin,
-                amenity=["WiFi", "Air Conditioning", "Swimming Pool"]
-
+                owner=admin
             ),
             Place(
                 title="Forest Cabin",
@@ -60,8 +59,7 @@ def _seed_places():
                 longitude= 75.0050,
                 location="Novossibirsk",
                 price=60,
-                owner=admin,
-                amenity=["WiFI", "Swimming Pool"]
+                owner=admin
 
             ),
             Place(
@@ -71,11 +69,20 @@ def _seed_places():
                 longitude= 80.5412,
                 location="Interlaken",
                 price=110,
-                owner=admin,
-                amenity="WiFi"
+                owner=admin
             ),
         ]
         db.session.add_all(places)
+        for place, amenity_names in zip(places, [
+            ["WiFi", "Air Conditioning", "Swimming Pool"],
+            ["WiFi", "Swimming Pool"],
+            ["WiFi"]
+        ]):
+            for name in amenity_names:
+                amenity = Amenity.query.filter_by(name=name).first()
+                if amenity:
+                    place.amenities.append(amenity)
+
         current_app.logger.info(f"{len(places)} places created successfully !")
     else:
         current_app.logger.info("Init places already exist in the database")

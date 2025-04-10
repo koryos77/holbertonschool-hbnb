@@ -18,7 +18,7 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-
+    location = db.Column(db.String(36), nullable=False)
     owner_id = db.Column(db.String(36), db.ForeignKey("user.id"), nullable=False)
     owner = db.relationship("User", back_populates="places")
 
@@ -27,7 +27,7 @@ class Place(BaseModel):
 
 
     def __init__(
-        self, title, price, latitude, longitude, owner, description=""
+        self, title, price, latitude, longitude, location, owner, description=""
     ):
         super().__init__()
         self.title: str = title
@@ -35,6 +35,7 @@ class Place(BaseModel):
         self.price: float = price
         self.latitude: float = latitude
         self.longitude: float = longitude
+        self.location: str = location
         self.owner: User = owner
         self.reviews: list[Review] = []
         self.amenities: list[Amenity] = []
