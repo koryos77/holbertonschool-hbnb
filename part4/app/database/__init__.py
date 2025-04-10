@@ -47,8 +47,8 @@ def _seed_places():
                 description="House on the beach. Enjoy the sunset",
                 latitude= 40.7128,
                 longitude= 74.0060,
-                    price=85,
-                    owner=admin
+                price=45,
+                owner=admin
 
             ),
             Place(

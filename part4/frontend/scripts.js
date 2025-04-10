@@ -83,17 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
     placesList.innerHTML = ''; // Empty actual content
 
     places.forEach(place => {
-      const placeCards = document.getElementsByClassName('place-cards');
-      placeCards.className = 'place-cards';
-      placeCards.dataset.price = place.price; // stock price for filtering
-      placeCards.innerHTML = `
-        <h2>${place.title}</h2>
+      const placeElement = document.createElement('div');
+      placeElement.className = 'place-item'; // for css (??)
+      placeElement.dataset.price = place.price; // stock price for filtering
+      placeElement.innerHTML = `
+        <h2>${place.name}</h2>
         <p>${place.description}</p>
-        <p>Latitude: ${place.latitude}</p>
-        <p>Longitude: ${place.longitude}</p>
+        <p>${place.latitude}</p>
+        <p>${place.longitude}</p>
         <p>Price per night: $${place.price}</p>
       `;
-      placesList.appendChild(placeCards);
+      placesList.appendChild(placeElement);
     });
 
     filterPlaces(); // Apply initial filter
