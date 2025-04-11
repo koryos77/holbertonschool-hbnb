@@ -85,6 +85,10 @@ h1 {
     width: 100%;
 }
 
+.lock {
+    width: 250px;
+}
+
 .place-cards {
     display: flex;
     flex-direction: column;
@@ -96,19 +100,39 @@ h1 {
     width: 30%;
     height: auto;
     background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .place-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    object-position: center;
     border-radius: 10px;
 }
 
 .place-info {
     text-align: center;
     padding: 10px;
+}
+
+.details-button-lock {
+    display: inline-block;
+    height: 35px;
+    width: 150px;
+    line-height: 35px;
+    text-align: center;
+    margin: 15px auto 0 auto;
+    padding-bottom: 45px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: #c44d38fb;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+.details-button-lock:hover {
+    background-color: #9e382a;
 }
 
 .details-button {
@@ -171,7 +195,62 @@ label {
 #place-details input {
     resize: none;
 }
+
+#place-details .place-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    object-position: center;
+}
 /* ------ REVIEWS ------ */
+#reviews {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#add-review {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#review-form {
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+}
+
+#review-text {
+    resize: none;
+    width: 350px;
+    height: 75px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    
+}
+
+#review-form button {
+    border-radius: 6px;
+    width: 85px;
+    height: 25px;
+    margin-bottom: 20px;
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+#review-form button:hover {
+    width: 95px;
+    height: 30px;
+    background-color: #c44d38fb;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
 
 /* ------ LOGIN ------ */
 #login-form {
