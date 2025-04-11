@@ -78,3 +78,6 @@ The token/cookie for user authentication is managed across the entire site. When
 - Authentication is managed using cookies and a token-based system, ensuring that users are logged in throughout their session.
 
 - The token is stored as a cookie and expires in 2 hours for security reasons.
+
+## Author
+- [Kevin Rouget](https://github.com/koryos77)
