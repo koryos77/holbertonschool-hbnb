@@ -30,17 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
   // Function to get the cookie by its name
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
+
   // Function to get the place ID from URL
   function getPlaceIdFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('id');
   }
+
   // Check authentication and manage connection link or place details
   function checkAuthentication() {
     const token = getCookie('token');
@@ -69,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fetchPlaceDetails(token, placeId);
     }
   }
+
   // Fetch places from API
   async function fetchPlaces(token) {
     try {
@@ -90,27 +94,46 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Network Error:', error.message);
     }
   }
+
   // Display places on the page
   function displayPlaces(places) {
     const placesList = document.getElementById('places-list');
-    if (!placesList) return; // Leave if element doesn't exist
-    placesList.innerHTML = ''; // Empty actual content
+    if (!placesList) return;
+    placesList.innerHTML = '';
+  
     places.forEach(place => {
       const placeElement = document.createElement('div');
-      placeElement.className = 'place-item';
-      placeElement.dataset.price = place.price; // stock price for filtering
+      placeElement.className = 'place-cards';
+      placeElement.dataset.price = place.price;
+      const imagePath = getImagePathFromTitle(place.title);
+  
       placeElement.innerHTML = `
-        <h2>${place.title}</h2>
-        <p>${place.description}</p>
-        <p>Latitude: ${place.latitude}</p>
-        <p>Longitude: ${place.longitude}</p>
-        <p>Price per night: $${place.price}</p>
-        <a class="details-button" href="place.html?id=${place.id}"><button class="details-button">View Details</button></a>
+        <img src="${imagePath}" alt="${place.title}" class="place-image">
+        <div class="place-info">
+          <h2>${place.title}</h2>
+          <p>${place.description}</p>
+          <p>Latitude: ${place.latitude}</p>
+          <p>Longitude: ${place.longitude}</p>
+          <p>Price per night: $${place.price}</p>
+          <a class="details-button" href="place.html?id=${place.id}">View Details</a>
+        </div>
       `;
       placesList.appendChild(placeElement);
     });
-    filterPlaces(); // Apply initial filter
+  
+    filterPlaces();
   }
+
+  // Function to generate the path for the place image based on its title
+  function getImagePathFromTitle(title) {
+    const imageMap = {
+      'Beach House': 'places_photos/beach_house.jpg',
+      'Forest Cabin': 'places_photos/forest_cabin.jpg',
+      'Mountain Cabin': 'places_photos/mountain_cabin.jpg',
+    };
+    return imageMap[title] || 'places_photos/default.jpg'; // Default image if title doesn't match
+  }
+
   // Fetch place details from API
   async function fetchPlaceDetails(token, placeId) {
     const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
@@ -133,12 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Display the details of a place including its image and reviews
   function displayPlaceDetails(place) {
     const placeDetails = document.getElementById('place-details');
     if (!placeDetails) return;
+
+    const imagePath = getImagePathFromTitle(place.title);
+
     placeDetails.innerHTML = `
       <div id="place-name">
         <h1>${place.title}</h1>
+      </div>
+      <div id="place-image">
+        <img src="${imagePath}" alt="${place.title}" class="place-image">
       </div>
       <div id="place-description">
         <h4>Host: ${place.owner_id}</h4>
@@ -150,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <h4>Amenities: ${place.amenities || 'No amenity in this place.'}</h4>
       </div>
     `;
+
     const reviewsSection = document.getElementById('reviews');
     if (!reviewsSection) return;
     reviewsSection.innerHTML = '<h3>Reviews</h3>';
@@ -169,15 +200,17 @@ document.addEventListener('DOMContentLoaded', () => {
       reviewsSection.innerHTML += '<p>No review for the moment.</p>';
     }
   }
+
   // Filtering places by price
   const priceFilter = document.getElementById('price-filter');
   if (priceFilter) {
     priceFilter.addEventListener('change', filterPlaces);
   }
+
   function filterPlaces() {
     const selectedPrice = document.getElementById('price-filter')?.value;
     if (!selectedPrice) return; // Exit if filter doesn't exist
-    const placeItems = document.querySelectorAll('.place-item');
+    const placeItems = document.querySelectorAll('.place-cards');
     placeItems.forEach(item => {
       const price = parseFloat(item.dataset.price);
       if (selectedPrice === 'all' || price <= parseFloat(selectedPrice)) {
@@ -187,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
   // Initialize page
   checkAuthentication();
 });

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_restx import Api
 from app.api.v1.users import api as users_ns
@@ -25,4 +25,8 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(places_ns, path='/api/v1/places')
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(auth_ns, path='/api/v1/auth')
+    @app.route('/places_photos/<path:filename>')
+    def serve_place_photo(filename):
+        return send_from_directory('frontend/places_photos', filename)
+
     return app

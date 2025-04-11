@@ -24,10 +24,11 @@ class Place(BaseModel):
 
     reviews = db.relationship("Review", back_populates="place", cascade="all, delete-orphan")
     amenities = db.relationship("Amenity", secondary="place_amenity", back_populates="places")
-
+    
+    images = db.Column(db.PickleType, nullable=True)
 
     def __init__(
-        self, title, price, latitude, longitude, location, owner, description=""
+        self, title, price, latitude, longitude, location, owner, description="", images=None
     ):
         super().__init__()
         self.title: str = title
@@ -39,6 +40,7 @@ class Place(BaseModel):
         self.owner: User = owner
         self.reviews: list[Review] = []
         self.amenities: list[Amenity] = []
+        self.images: list[str] = images or []
 
     @validates("title")
     def validate_title(self, key, title):
@@ -47,9 +49,7 @@ class Place(BaseModel):
             raise TypeError("title must be a string")
 
         if not title or len(title) > 50:
-            raise ValueError(
-                "title cannot be empty and must be less than 50 characters"
-            )
+            raise ValueError("title cannot be empty and must be less than 50 characters")
 
         return title
 

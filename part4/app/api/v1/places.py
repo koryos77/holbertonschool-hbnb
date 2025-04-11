@@ -1,6 +1,14 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
 from app.services import facade
+from werkzeug.utils import secure_filename
+import os
+
+UPLOAD_FOLDER = 'frontend/places_photos'
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 api = Namespace('places', description='Place operations')
 
@@ -23,7 +31,8 @@ place_model = api.model('Place', {
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
     'location': fields.String(required=True, description='Location of the place'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
+    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's"),
+    'images': fields.List(fields.String, description="List of image filenames for the place")
 })
 
 @api.route('/')
@@ -38,6 +47,21 @@ class PlaceList(Resource):
         sub = get_jwt_identity()
         place_data['owner_id'] = sub
         print("in")
+
+        if 'images' in place_data:
+            images = place_data['images']
+            image_filenames = []
+
+            for image in images:
+                if allowed_file(image):
+                    filename = secure_filename(image)
+                    image_filenames.append(filename)
+                    image.save(os.path.join(UPLOAD_FOLDER, filename))
+                else:
+                    return {'error': 'Invalid image format'}, 400
+
+            place_data['images'] = image_filenames
+
         try:
             new_place = facade.create_place(place_data)
             return new_place.to_dict(), 201
@@ -62,10 +86,14 @@ class PlaceResource(Resource):
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
+        
         if not place:
             return {'error': 'Place not found'}, 404
-        return place.to_dict(), 200
 
+        place_data = place.to_dict()
+        place_data['images'] = [f"/places_photos/{image}" for image in place.images]
+        return place_data, 200
+        
     @jwt_required()
     @api.expect(place_model)
     @api.response(200, 'Place updated successfully')
@@ -123,4 +151,3 @@ class PlaceReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         return [review.to_dict() for review in place.reviews], 200
-    

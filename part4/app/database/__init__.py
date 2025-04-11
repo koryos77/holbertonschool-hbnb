@@ -3,7 +3,6 @@ from app.extensions import db
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
-from app.models.review import Review
 
 def init_db():
     """Initialize the database by creating tables."""
